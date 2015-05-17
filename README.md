@@ -22,7 +22,7 @@ R Studio Version
     * contains data referencing feature_id to feature name
 
 ## Combining Data Inside Test and Train
-Before combining testing and training datasets, we need to first combine
+Before combining testing and training datasets, we need to first combine 
 data within those folders into one.
 
 First, it was unclear from the README what y_train were.  I read them in and did a summary.  Once I realized that the range was 1-6 I realized they were references to labels.
@@ -34,3 +34,7 @@ There are three files here:
     - Training data, arranged in columns in the order described in features.txt
 * subject_train
     - The id of subject
+
+
+
+
