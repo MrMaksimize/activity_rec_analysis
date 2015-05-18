@@ -41,11 +41,12 @@ loadCommonData <- function() {
   list(activity_labels = activity_labels, features_labels = features_labels);
 }
 
+## Cache loading the large files otherwise it takes too long.
 loadFileCached <- function(setName, reset = FALSE) {
   varName <- paste0(setName, "_cache")
   if (nrow(get(varName)) == 0 || reset == TRUE) {
     set_data <- read.table(paste0("./data/", setName, "/X_", setName, ".txt"), header = FALSE)
-    assign("train_cache", set_data, envir = .GlobalEnv)
+    assign(varName, set_data, envir = .GlobalEnv)
   }
   else
     set_data <- get(varName)
@@ -53,16 +54,19 @@ loadFileCached <- function(setName, reset = FALSE) {
   set_data
 }
 
+## Repeats operations for both train and test datasets, separately.
+## Returns a list containing a train and test dataset, ready for meging.
 getSetData <- function(sets = c("train", "test")) {
   setList = list()
   for(setName in sets) {
+    ## Load activity data (y_) for the dataset
     set_activities <- read.table(
       paste0("./data/", setName, "/y_", setName, ".txt"),
       header = FALSE, 
       sep = " ",
       col.names = c("activity_id")
     );
-  
+    ## Load the subject data (subject_) for the dataset
     set_subjects <- read.table(
       paste0("./data/", setName, "/subject_", setName, ".txt"),
       header = FALSE, 
@@ -70,21 +74,22 @@ getSetData <- function(sets = c("train", "test")) {
       col.names = c("subject_id")
     );
     
+    ## Load the full set data (X_) using a caching mechanism.
     set_data <- loadFileCached(setName)
     
     ## First, apply the features as column names.
     names(set_data) <- commonData$features_labels$feature_label
     
     ## Add subject trained column
-    ## TODO -- should this be cbind?
     set_data$subject_id <- set_subjects$subject_id
     
-    ## Add activity id column
-    #set_data$activity_id <- set_activities$activity_id
-    #set_data <- cbind(set_data, set_activities)
+    ## Merge set_activities with activity names.  
+    set_activities <- merge(set_activities, commonData$activity_labels, by.x = "activity_id", by.y = "id")
     
+    ## Bind the activities data to the main set.
+    set_data <- cbind(set_data, set_activities)
     
-    #set_data <- melt(set_data, id.vars = c("activity_id", "subject_id"))
+    set_data <- melt(set_data, id.vars = c("activity_id", "activity_label", "subject_id"))
     setList[[setName]] <- set_data
   }
   setList
