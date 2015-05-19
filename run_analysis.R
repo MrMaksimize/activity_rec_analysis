@@ -89,7 +89,11 @@ getSetData <- function(sets = c("train", "test")) {
     ## Bind the activities data to the main set.
     set_data <- cbind(set_data, set_activities)
     
-    set_data <- melt(set_data, id.vars = c("activity_id", "activity_label", "subject_id"))
+    ## Put in a marker labeling whether this is test data or 
+    ## train data so we know after we merge.
+    set_data$data_type <- setName
+    
+    set_data <- melt(set_data, id.vars = c("activity_id", "activity_label", "subject_id", "data_type"))
     setList[[setName]] <- set_data
   }
   setList
@@ -112,7 +116,7 @@ commonData <- loadCommonData()
 
 ## Merge the training 
 
-#combinedSets <- merge()
+#combinedSets <- merge(sets$train, sets$test, by.x="a")
 
 
 
