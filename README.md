@@ -7,6 +7,7 @@
 * [Codebook](https://class.coursera.org/getdata-014/forum/thread?thread_id=137)
 * [Notes](http://sux13.github.io/DataScienceSpCourseNotes/3_GETDATA/Getting_and_Cleaning_Data_Course_Notes.html#reading-from-other-sources)
 * [Reshape Guide](http://seananderson.ca/2013/10/19/reshape.html)
+* [Tidy Data Guide](http://garrettgman.github.io/tidying/)
 
 ## Tidy Data Principles
   1. Each variable forms a column.
@@ -89,16 +90,17 @@ Perform the following for each dataset (test and train), separately:
     - return list with loaded data.
 * `prepSetData <- function(setData, setName) {`
     - Take subjects, a 1 col df
-    - Take set_activities.  Join them with `activity_labels`
     - Prepare X_data for merging
         + create a logic vector that returns true is value contains "std" or "mean"
         + apply logic vector to features_labels
         + use the filtered list of IDs now available to extract only the needed columns from X_data
         + set the colnames of X_data to the feature labels from the filtered dataframe of features.
     - Merge it all together
-        + merge the set activities and labels we generated above into the subjects list
+        + Merge in set_activities
+        + Join them with `activity_labels`  
         + use mutate to create another colum called `data_type`. Once the merge is made, we'll know if the data came from training or testing.
         + merge X_data
+        + Gather all the measurement columns in two concise measurements
 
 # Combining Test and Train.
 Once

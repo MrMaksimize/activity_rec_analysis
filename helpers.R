@@ -82,14 +82,6 @@ prepSetData <- function(setData, setName) {
   ## Start the combined set with just subjects, a 1 col df.
   combinedSet <- tbl_df(setData$subjects)
   
-  ## Merge set_activities with activity names.  
-  setActivities <- inner_join(
-    setData$activities, 
-    commonData$activity_labels, 
-    by = c("activity_id" = "id"), 
-    copy = TRUE
-  )
-  
  
   ## Apply the features labels df as column names.
   ## Avoid assigning names for now since it 
@@ -97,8 +89,8 @@ prepSetData <- function(setData, setName) {
   ## Get the features_labels subset that has the strings "mean" or "std" in them.
   ## Filter out that vector before assining it as names.
   logicVector <- grepl("std|mean",commonData$features_labels$feature_label);
-  #relevantFeatures <- commonData$features_labels[logicVector, ]
-  relevantFeatures <- commonData$features_labels[1:6, ]
+  relevantFeatures <- commonData$features_labels[logicVector, ]
+  #relevantFeatures <- commonData$features_labels[1:6, ]
   ## Get only the columns that match the filter in the X_ data.
   xData <- select(setData$data, relevantFeatures$id)
   ## Apply filtered labels to filtered columns.
@@ -109,14 +101,19 @@ prepSetData <- function(setData, setName) {
   ## of relevant cols and labels.
   ## Lets bring it all together.
   
+ 
   
   combinedSet <- combinedSet %>%
     ## Merge the setActivities into our combined set.
-    bind_cols(setActivities) %>%
+    bind_cols(setData$activities) %>%
+    ## Merge set_activities with activity names.  
+    inner_join(commonData$activity_labels, by = c("activity_id" = "id"), copy = TRUE) %>%
     ## Create a col for holdng the type of set.
     mutate(data_type = setName) %>%
     ## Merge the X_ data and our combined set from above.
-    bind_cols(xData) 
-  
-  combinedSet
+    bind_cols(xData) %>%
+    ## Gather all the measurement columns in two concise measurements
+    gather(key = "measurement_name", value = "measurement_value", -(1:4))
+  ## TODO http://garrettgman.github.io/tidying/
+  tbl_df(combinedSet)
 }

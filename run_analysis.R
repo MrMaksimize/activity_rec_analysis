@@ -24,10 +24,12 @@ if (!exists('test_cache'))
 
 ## Load training set
 train_set <- train_cache
+## Load the test set
+test_set <- test_cache
 
 ## Make it wonderful.
-prepped <- prepSetData(train_set, "train")
-prepped
+prepped_train <- prepSetData(train_set, "train")
+prepped_test <- prepSetData(test_set, "test")
 
 
 
