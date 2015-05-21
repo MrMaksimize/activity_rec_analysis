@@ -2,6 +2,7 @@
 ## Resources Used
 * [FAQ](https://class.coursera.org/getdata-014/forum/thread?thread_id=30)
 * [Tidy Data](https://class.coursera.org/getdata-014/forum/thread?thread_id=31)
+* [Data Wrangling Cheatsheet](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 * [README advice](https://class.coursera.org/getdata-014/forum/thread?thread_id=213)
 * [Codebook](https://class.coursera.org/getdata-014/forum/thread?thread_id=137)
 * [Notes](http://sux13.github.io/DataScienceSpCourseNotes/3_GETDATA/Getting_and_Cleaning_Data_Course_Notes.html#reading-from-other-sources)
@@ -81,17 +82,23 @@ In addition, I made several more observations:
 
 #### Pre-Processing of Test and Train Data
 Perform the following for each dataset (test and train), separately:
-* load in `y_` activity data
-* load in `subjects_` subject data
-* load in (cached) the `X_` data -- this is the main dataset
-* apply the `features.txt` as column names
-* add in the `subjects_` data to the main dataset
-* take the activities list (`y_`), and merge it with `activities_labels`
-* `cbind` the result to the main dataset
-* melt it down with only `"activity_id", "activity_label", "subject_id"` as IDs.
-* add to list for return
-
-The function then returns a list contains the prepared test and train data.
+* `loadSetData <- function(setName)`
+    - load in `y_` activity data
+    - load in `subjects_` subject data
+    - load in (cached) the `X_` data -- this is the main dataset
+    - return list with loaded data.
+* `prepSetData <- function(setData, setName) {`
+    - Take subjects, a 1 col df
+    - Take set_activities.  Join them with `activity_labels`
+    - Prepare X_data for merging
+        + create a logic vector that returns true is value contains "std" or "mean"
+        + apply logic vector to features_labels
+        + use the filtered list of IDs now available to extract only the needed columns from X_data
+        + set the colnames of X_data to the feature labels from the filtered dataframe of features.
+    - Merge it all together
+        + merge the set activities and labels we generated above into the subjects list
+        + use mutate to create another colum called `data_type`. Once the merge is made, we'll know if the data came from training or testing.
+        + merge X_data
 
 # Combining Test and Train.
 Once

@@ -120,30 +120,3 @@ prepSetData <- function(setData, setName) {
   
   combinedSet
 }
-
-## Repeats operations for both train and test datasets, separately.
-## Returns a list containing a train and test dataset, ready for meging.
-getSetData2 <- function(sets = c("train", "test")) {
-  setList = list()
-  for(setName in sets) {
-    
-    ## First, apply the features as column names.
-    names(set_data) <- commonData$features_labels$feature_label
-    
-    ## Add subject trained column
-    set_data$subject_id <- set_subjects$subject_id
-    
-    
-    
-    ## Bind the activities data to the main set.
-    set_data <- cbind(set_data, set_activities)
-    
-    ## Put in a marker labeling whether this is test data or 
-    ## train data so we know after we merge.
-    set_data$data_type <- setName
-    
-    set_data <- melt(set_data, id.vars = c("activity_id", "activity_label", "subject_id", "data_type"))
-    setList[[setName]] <- set_data
-  }
-  setList
-}
