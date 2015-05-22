@@ -94,7 +94,7 @@ prepSetData <- function(setData, setName) {
     bind_cols(setData$activities) %>%
     ## Merge set_activities with activity names.  
     inner_join(commonData$activity_labels, by = c("activity_id" = "id"), copy = TRUE) %>%
-    ## Create a col for holdng the type of set.
+    ## Create a col for holdng the type of set.  Not needed for Objective 5.
     mutate(data_type = factor(setName, levels = c("test", "train"))) %>%
     ## Merge the X_ data and our combined set from above.
     bind_cols(xData) %>%

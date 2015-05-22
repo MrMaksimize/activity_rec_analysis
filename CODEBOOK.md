@@ -95,14 +95,8 @@ Only an overview of the processing is provided here.  For more information pleas
     * Generate the tidy text file, called `grouped_means.txt` that meets the principles of tidy data mentioned above, and can be read with `read.table(header=TRUE)`
 
 ## Tidy data justification
-### Objective 4 table generated.
 This is the narrow form of Tidy Data.  Features were gathered into a single column called `feature_name` and their measurements into `feature_value`. 
-I reviewed it against Section 3 of [Hadley Wickham's Tidy Data Paper](http://vita.had.co.nz/papers/tidy-data.pdf) and the various messy datasets use cases and could not match them.  
-
-I also chose to add a `data_type` column, which delineates where the data came from - the test or train sets.  It made sense because that data was partioned separately, and tidy data should reflect so.
-
-### Objective 5 table generated.
-This is also the narrow form of tidy data.  It effectively contains each of the 79 features that are standard deviation or mean of a measurement at every potential combination of subject and activity id.  It is grouped in this order:
+I reviewed it against Section 3 of [Hadley Wickham's Tidy Data Paper](http://vita.had.co.nz/papers/tidy-data.pdf) and the various messy datasets use cases and could not match them.  It effectively contains each of the features that are standard deviation or mean of a measurement at every potential combination of subject and activity id.  It is grouped in this order:
 
 * `activity_id`, 
 * `activity_label`,
@@ -112,7 +106,6 @@ This is also the narrow form of tidy data.  It effectively contains each of the 
 The `feature_mean` column created is the result of a `dplyr` `summarize` function and is a value of the mean value of that feature for that activity for that subject.
 
 # Variables:
-## Objective 4
 
 * `subject_id` 
     - ID of the subject who performed the activity.
@@ -132,12 +125,6 @@ The `feature_mean` column created is the result of a `dplyr` `summarize` functio
         + `SITTING`
         + `STANDING`
         + `LAYING`
-* `data_type` 
-    - The set of data where this row originally came from
-    - String
-    - One of:
-        + `test`
-        + `train`
 * `feature_name`  
     - The name of the measurement.  See features_info below for more scientific description of the measurements
     - String
@@ -232,6 +219,50 @@ The `feature_mean` column created is the result of a `dplyr` `summarize` functio
 * `feature_value`
     - Numeric
     - Value of the feature from feature_name.
+
+
+## Features Info
+
+The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+tBodyAcc-XYZ
+tGravityAcc-XYZ
+tBodyAccJerk-XYZ
+tBodyGyro-XYZ
+tBodyGyroJerk-XYZ
+tBodyAccMag
+tGravityAccMag
+tBodyAccJerkMag
+tBodyGyroMag
+tBodyGyroJerkMag
+fBodyAcc-XYZ
+fBodyAccJerk-XYZ
+fBodyGyro-XYZ
+fBodyAccMag
+fBodyAccJerkMag
+fBodyGyroMag
+fBodyGyroJerkMag
+
+The set of variables that were estimated from these signals are: 
+
+mean(): Mean value
+std(): Standard deviation
+angle(): Angle between tow vectors.
+
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+
+gravityMean
+tBodyAccMean
+tBodyAccJerkMean
+tBodyGyroMean
+tBodyGyroJerkMean
 
 
 
