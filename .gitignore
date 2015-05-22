@@ -18,3 +18,4 @@ vignettes/*.pdf
 *.tar.gz
 *.pdf
 data/*
+.RData
