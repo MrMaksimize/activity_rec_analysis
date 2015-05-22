@@ -27,19 +27,20 @@ train_set <- train_cache
 ## Load the test set
 test_set <- test_cache
 
-## Prepare each dataset separe
+## Prepare each dataset separately
 prepped_train <- prepSetData(train_set, "train")
 prepped_test <- prepSetData(test_set, "test")
 
 ## Finally, combine the two rows.
 prepped_complete <- bind_rows(prepped_train, prepped_test)
 
+
 ## Create second, independent grouped set.
 prepped_summarized <- prepped_complete %>%
-  group_by(activity_id) 
-  #group_by(subject_id) %>%
-  #group_by(measurement_name) %>%
-  #summarise(measurement_avg = mean(measurement_value))
+  group_by(activity_id, activity_label, subject_id, feature_name) %>%
+  summarise(feature_mean = mean(feature_value))
+
+write.table(prepped_summarized, "grouped_means.txt", row.names = TRUE)
 
 
 
