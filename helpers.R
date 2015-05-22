@@ -11,20 +11,7 @@ dlData <- function() {
   }
 }
 
-## Cache loading the large files otherwise it takes too long.
-# loadFileCached <- function(setName, reset = FALSE) {
-#   varName <- paste0(setName, "_cache")
-#   if (!exists(paste0(setName, "_cache"), where = globalenv()) || reset == TRUE) {
-#     print("exists")
-#     ##set_data <- read.table(paste0("./data/", setName, "/X_", setName, ".txt"), header = FALSE)
-#     set_data <- data.frame(c(1:300))
-#     assign(varName, set_data, pos = globalenv())
-#   }
-#   else
-#     set_data <- get(varName, pos = globalenv())
-#   
-#   set_data
-# }
+
 
 ## Load in data that's common to both test and train.
 loadCommonData <- function() {

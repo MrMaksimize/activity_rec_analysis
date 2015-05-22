@@ -103,9 +103,5 @@ Perform the following for each dataset (test and train), separately:
         + Gather all the measurement columns in two concise measurements
 
 # Combining Test and Train.
-Once
-
-# Random Notes
-#### Caching Mechanism
-It was driving me crazy loading in the large files each time, so I created some cache variables in the global space, and a function
+Once both the test and train datasets are in the proper "tidy data" form, all we need to do is bring them together by `bind_rows`.
 
