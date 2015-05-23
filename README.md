@@ -51,13 +51,7 @@ Please see the code for more details -- it's heavily commented.
 * A file is generated to complete Objective 5 that conforms to the tidy data principles.
 
 ## How to read the generated tidy data file for evaluation.
-Assuing RStudio:
+Assuming RStudio:
 
 `View(read.table("grouped_means.txt", header=TRUE))`
-
-You can also (assuming the project directory is your working directory):
-`source('./helpers')`
-`readGroupedMeans()`
-
-This will download the file, read it, and open the View in RStudio.
 

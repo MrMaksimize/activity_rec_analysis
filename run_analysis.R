@@ -45,7 +45,7 @@ prepped_summarized <- prepped_complete %>%
   group_by(subject_id, activity_label, feature_name) %>%
   summarise(feature_mean = mean(feature_value))
 
-write.table(prepped_summarized, "grouped_means.txt", row.names = TRUE)
+write.table(prepped_summarized, "grouped_means.txt", row.names = FALSE)
 
 
 

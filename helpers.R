@@ -100,11 +100,3 @@ prepSetData <- function(setData, setName) {
   tbl_df(combinedSet)
 }
 
-
-## Read generated table and view it.
-readGroupedMeans <- function() {
-  address <- ""
-  address <- sub("^https", "http", address)
-  data <- read.table(url(address), header = TRUE) 
-  View(data)
-}
