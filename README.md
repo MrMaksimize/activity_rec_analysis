@@ -66,3 +66,10 @@ Assuming RStudio:
 
 `View(read.table("grouped_means.txt", header=TRUE))`
 
+Alternatively, to get the file loaded to coursera:
+`source('/path/to/loadAndViewData.R')`
+
+This will download the data and open it for you to view in RStudio.
+
+You can also see the script [here](https://github.com/MrMaksimize/activity_rec_analysis/blob/master/loadAndViewData.R) and follow it, should you have problems.
+
