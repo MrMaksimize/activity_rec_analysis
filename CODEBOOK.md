@@ -1,16 +1,6 @@
-# Introduction
-## Environment
-* OS Version: `MacOSX Yosemite 10.10.3`
-* R Version: `3.1.3 (2015-03-09)`
-* R Studio Version: `0.98.1102`
-
-## Package Dependencies
-* `dplyr`
-* `tidyr`
-
-## Codebook Design
+# Codebook Design
 This codebook is loosely modeled on the [ICPSR Guide](http://www.icpsr.umich.edu/icpsrweb/ICPSR/support/faqs/2006/01/what-is-codebook) and the [2006 Data Housing Dictionary from Quiz 1](https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FPUMSDataDict06.pdf)
-## Resources Used for Project
+# Resources Used for Project
 This is not all inclusive, but some of the main supporting factors my thinking.
 
 * **Coursera Threads**
@@ -23,7 +13,7 @@ This is not all inclusive, but some of the main supporting factors my thinking.
     * [dplyr intro](http://seananderson.ca/2014/09/13/dplyr-intro.html)
     * [tidying data](http://garrettgman.github.io/tidying/)
 
-## Understanding the Assignment
+# Understanding the Assignment
 ### Tidy Data
 Since this assignment is heavily based on the concept of Tidy Data, it's reasonable to include some very basic points of `what makes data tidy`.
 
@@ -87,33 +77,29 @@ Only an overview of the processing is provided here.  For more information pleas
 * When they have been merged within their respective directories, bring the datasets together by bind_rows.
 * To create the independent dataset for part 5 of the Objectives:
     - Group by: 
-        - `activity_id`, 
-        - `activity_label`, 
         - `subject_id`, 
-        - `measurement_name`
-    * Summarize, creating a new column called `measurement_avg`
+        - `activity_label`, 
+        - `feature_name`
+    * Summarize, creating a new column called `feature_mean`
     * Generate the tidy text file, called `grouped_means.txt` that meets the principles of tidy data mentioned above, and can be read with `read.table(header=TRUE)`
 
-## Tidy data justification
+## Tidy Data Generation
 This is the narrow form of Tidy Data.  Features were gathered into a single column called `feature_name` and their measurements into `feature_value`. 
-I reviewed it against Section 3 of [Hadley Wickham's Tidy Data Paper](http://vita.had.co.nz/papers/tidy-data.pdf) and the various messy datasets use cases and could not match them.  It effectively contains each of the features that are standard deviation or mean of a measurement at every potential combination of subject and activity id.  It is grouped in this order:
+I reviewed it against Section 3 of [Hadley Wickham's Tidy Data Paper](http://vita.had.co.nz/papers/tidy-data.pdf) and the various messy datasets use cases and could not match them.  It effectively contains each of the features that are standard deviation or mean of a measurement at every potential combination of subject and activity label.  It is grouped in this order:
 
-* `activity_id`, 
-* `activity_label`,
-* `subject_id`, 
+* `subject_id`,
+* `activity_label`, 
 * `feature_name`
 
 The `feature_mean` column created is the result of a `dplyr` `summarize` function and is a value of the mean value of that feature for that activity for that subject.
+
+Lastly, I chose not to include `activity_id` in the generated data because it's always 1:1 with activity label, and the labels are machine friendly enough (consistent strings) that unless we were going to cross reference `activity_id`'s in another dataset or database, I felt like they didn't need to be there.
 
 # Variables:
 
 * `subject_id` 
     - ID of the subject who performed the activity.
     - Range 1:30
-    - Integer
-* `activity_id`   
-    - ID of the activity performed.
-    - Range 1:6
     - Integer
 * `activity_label`
     - Name of the activity performed
@@ -216,9 +202,9 @@ The `feature_mean` column created is the result of a `dplyr` `summarize` functio
         + `angle(Y,gravityMean)`
         + `angle(Z,gravityMean)`
 
-* `feature_value`
+* `feature_mean`
     - Numeric
-    - Value of the feature from feature_name.
+    - Average of the features value grouped by subject and activity.
 
 
 ## Features Info
