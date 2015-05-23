@@ -84,11 +84,8 @@ prepSetData <- function(setData, setName) {
   ## Apply filtered labels to filtered columns.
   colnames(xData) <- relevantFeatures$feature_label
   
-  ## Now we have everything.  
-  ## Activity data df, subject data df and a df with X_ data 
-  ## of relevant cols and labels.
-  ## Lets bring it all together.
-  
+  ## Combine the combined set including subject_ids, 
+  ## the activities data, and the measurementsdata
   combinedSet <- combinedSet %>%
     ## Merge the setActivities into our combined set.
     bind_cols(setData$activities) %>%
@@ -100,6 +97,14 @@ prepSetData <- function(setData, setName) {
     bind_cols(xData) %>%
     ## Gather all the feature columns in two concise key/value columns
     gather(key = "feature_name", value = "feature_value", -(1:4))
-  ## TODO http://garrettgman.github.io/tidying/
   tbl_df(combinedSet)
+}
+
+
+## Read generated table and view it.
+readGroupedMeans <- function() {
+  address <- ""
+  address <- sub("^https", "http", address)
+  data <- read.table(url(address), header = TRUE) 
+  View(data)
 }

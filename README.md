@@ -39,18 +39,25 @@ The script should automatically set the working directory to the folder where it
 This method uses CURL so if you are having trouble with it, or are running Windows, you can download the file from the aforementioned link, extract it to a folder named `./data` within the working directory (the directory `run_analysis.R` is in), and it should work.  It checks for the existence of that directory.
 
 ## What happens when you source run_analysis.r
+
+Please see the code for more details -- it's heavily commented.
+
 * If you don't have either `dplyr` or `tidyr` installed, it will install those.
 * It will load those libraries
 * Set the working directory for the script to the working directory of the `run_analysis` file.
 * Load in the `helpers.R` file with helper functions.
 * Check if `./data` directory exists.  If it doesn't, it will download the zip file and unzip it to that directory.
-* It will load in the commonData - `features.txt` and `activity_labels.txt`
-* It will load in the "set data" (data from train or test folders).  It will load each of those files, and return a list of data frames.
-* It will cache the result, so that file is not read every time you run the script.
-* It will run prepare over the training and testing data.  The `prepSetData` function does all the necessary work to combine the three files in the given folder (`test` or `train`) and return one data frame. 
-* The prepared testing and training data are joined together using `bind_rows`
-* The data then is grouped by `subject_id`, `activity_label`, and `feature_name` and summarized to create a `feature_mean` column.
+* The data is then processed according to the [Processing the Data](https://github.com/MrMaksimize/activity_rec_analysis/blob/master/CODEBOOK.md#processing-the-data) section in the Codebook.
+* A file is generated to complete Objective 5 that conforms to the tidy data principles.
 
 ## How to read the generated tidy data file for evaluation.
-`read.table("grouped_means.txt", header=TRUE)`
+Assuing RStudio:
+
+`View(read.table("grouped_means.txt", header=TRUE))`
+
+You can also (assuming the project directory is your working directory):
+`source('./helpers')`
+`readGroupedMeans()`
+
+This will download the file, read it, and open the View in RStudio.
 
