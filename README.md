@@ -1,3 +1,14 @@
+
+## Running the code.
+Most of the things you need done, like installing packages and downloading data the script will do for you.  If you have trouble, see the more detailed descriptions below.  
+Otherwise, running:
+`source('path/to/where/you/cloned/run_analysis.R')` 
+will do the trick.
+
+You could also set the working directory to the folder where the project resides, but the script should do that for you:
+
+`setwd('path/to/where/you/cloned/the/project')`
+
 ## Environment when this script was created.
 * OS Version: `MacOSX Yosemite 10.10.3`
 * R Version: `3.1.3 (2015-03-09)`
